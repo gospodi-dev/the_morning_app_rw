@@ -95,7 +95,15 @@ class _TodosPageState extends State<TodosPage> {
     }
   }
 
-  //TODO: Reorder To-dos
+  void reorderTodos(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final item = todos.removeAt(oldIndex);
+    setState(() {
+      todos.insert(newIndex, item);
+    });
+  }
 
   Future<bool> onWillPop() async {
     if (isAddingTodo.value) {
