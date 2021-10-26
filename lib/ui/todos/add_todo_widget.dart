@@ -57,7 +57,7 @@ class _AddTodoWidgetState extends State<AddTodoWidget> {
     return ElevatedButton(
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(AppColors.primary)),
-      onPressed: () {},
+      onPressed: addTodo,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Text(
