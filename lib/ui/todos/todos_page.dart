@@ -135,6 +135,7 @@ class _TodosPageState extends State<TodosPage> {
       children: todos
           .map(
             (todo) => TodoItemWidget(
+              key: ObjectKey(todo),
               todo: todo,
               todosRepository: widget.todosRepository,
             ),
