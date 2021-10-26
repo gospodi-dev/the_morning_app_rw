@@ -4,8 +4,8 @@ import '../../data/data_sources/news_remote_data_source.dart';
 import '../../data/data_sources/todos_local_data_source.dart';
 import '../../data/repository/news_repository.dart';
 import '../../data/repository/todos_repository.dart';
-import '../../ui/news/news_page.dart';
-import '../../ui/todos/todos_page.dart';
+import '../news/news_page.dart';
+import '../todos/todos_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentTab = 0;
-  // TODO: Preserve Scroll Position on tab change
+  //TODO: Preserve Scroll Position on tab change
 
   final pages = <Widget>[
     TodosPage(

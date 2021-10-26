@@ -32,21 +32,12 @@
  * THE SOFTWARE.
  */
 
-import 'dart:async';
+import 'package:intl/intl.dart';
 
-import '../../models/news_model.dart';
-import '../data_sources/news_remote_data_source.dart';
+class DateTimeUtils {
+  static String formattedDate(DateTime dateTime) =>
+      DateFormat('MMM d yyyy').format(dateTime);
 
-class NewsRepository {
-  const NewsRepository({
-    required this.remoteDataSource,
-  });
-  final NewsRemoteDataSource remoteDataSource;
-
-  Future<List<NewsModel>> fetchTopNews() async {
-    final ids = await remoteDataSource.fetchTopIds();
-    final news =
-        ids.sublist(0, 30).map((id) => remoteDataSource.fetchItem(id)).toList();
-    return Future.wait(news);
-  }
+  static String formattedDateFromEpoch(int dateTime) =>
+      formattedDate(DateTime.fromMillisecondsSinceEpoch(dateTime * 1000));
 }
