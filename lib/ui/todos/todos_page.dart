@@ -129,8 +129,8 @@ class _TodosPageState extends State<TodosPage> {
     );
   }
 
-  Widget buildTodoList() {
-    return ListView(
+  ReorderableListView buildTodoList() {
+    return ReorderableListView(
       padding: const EdgeInsets.only(bottom: 90),
       children: todos
           .map(
@@ -140,6 +140,7 @@ class _TodosPageState extends State<TodosPage> {
             ),
           )
           .toList(),
+      onReorder: reorderTodos,
     );
   }
 
