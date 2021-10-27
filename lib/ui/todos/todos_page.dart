@@ -129,19 +129,19 @@ class _TodosPageState extends State<TodosPage> {
     );
   }
 
-  ReorderableListView buildTodoList() {
+  Widget buildTodoList() {
     return ReorderableListView(
-      padding: const EdgeInsets.only(bottom: 90),
-      children: todos
-          .map(
-            (todo) => TodoItemWidget(
-              key: ObjectKey(todo),
-              todo: todo,
-              todosRepository: widget.todosRepository,
-            ),
-          )
-          .toList(),
-      onReorder: reorderTodos,
+          padding: const EdgeInsets.only(bottom: 90),
+            children: todos
+                .map(
+                  (todo) => TodoItemWidget(
+                    key: ObjectKey(todo),
+                    todo: todo,
+                    todosRepository: widget.todosRepository,
+                  ),
+                )
+                .toList(),
+            onReorder: reorderTodos,
     );
   }
 

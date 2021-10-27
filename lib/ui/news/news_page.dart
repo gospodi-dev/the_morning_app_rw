@@ -53,7 +53,20 @@ class _NewsPageState extends State<NewsPage> {
   late List<NewsModel> news;
   bool isLoading = true;
 
-  //TODO: Preserve News State on tab change
+  void updateNewsState() {
+    final fetchedNews =
+        PageStorage.of(context)!.readState(context, identifier: widget.key);
+    if (fetchedNews != null) {
+      setNewsState(fetchedNews);
+    } else {
+      fetchNews();
+    }
+  }
+
+  void saveToPageStorage(List<NewsModel> newNewsState) {
+    PageStorage.of(context)!
+        .writeState(context, newNewsState, identifier: widget.key);
+  }
 
   void setNewsState(
     List<NewsModel> newNewsState, {
@@ -64,6 +77,11 @@ class _NewsPageState extends State<NewsPage> {
         news = newNewsState;
         isLoading = false;
       });
+
+      if (shouldSavePageStorage) {
+        PageStorage.of(context)!
+            .writeState(context, newNewsState, identifier: widget.key);
+      }
     }
   }
 
@@ -72,6 +90,7 @@ class _NewsPageState extends State<NewsPage> {
       final fetchedNews = await widget.newsRepository.fetchTopNews();
       final shuffledNews = ListUtils.shuffle(fetchedNews) as List<NewsModel>;
       setNewsState(shuffledNews);
+      saveToPageStorage(shuffledNews);
     } on Exception catch (_) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -84,14 +103,20 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     super.initState();
-    fetchNews();
+    updateNewsState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.secondaryColor,
-      body: isLoading ? const ProgressWidget() : buildNewsList(),
+      body: isLoading
+          ? const ProgressWidget()
+          : RefreshIndicator(
+              child: buildNewsList(),
+              onRefresh: fetchNews,
+              color: AppColors.primary,
+            ),
     );
   }
 
@@ -99,8 +124,17 @@ class _NewsPageState extends State<NewsPage> {
     return ListView(
       children: news
           .map(
-            (newsItem) => NewsItemWidget(
-              newsItem: newsItem,
+            (newsItem) => Column(
+              key: ValueKey<int>(newsItem.id),
+              children: [
+                NewsItemWidget(
+                  newsItem: newsItem,
+                ),
+                const Divider(
+                  color: Colors.black54,
+                  height: 0,
+                ),
+              ],
             ),
           )
           .toList(),

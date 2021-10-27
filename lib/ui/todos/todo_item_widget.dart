@@ -67,7 +67,7 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
   Future<void> setTodoToDone() async {
     try {
       final isSavedSuccessfully =
-          await widget.todosRepository.editTodo(todo.copyWith(isDone: true));
+      await widget.todosRepository.editTodo(todo.copyWith(isDone: true));
       if (isSavedSuccessfully && mounted) {
         setState(() {
           isDone = true;
@@ -85,7 +85,7 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
   Future<void> deleteTodo() async {
     try {
       final isDeletedSuccessfully =
-          await widget.todosRepository.deleteTodo(todo);
+      await widget.todosRepository.deleteTodo(todo);
       if (isDeletedSuccessfully && mounted) {
         setState(() {
           isDeleted = true;
@@ -114,7 +114,7 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
     final colorScheme = Theme.of(context).colorScheme;
     final itemColor = colorScheme.primary.withOpacity(0.05 * todo.priority);
     final priorityIconColor =
-        colorScheme.secondaryVariant.withOpacity(0.2 * todo.priority);
+    colorScheme.secondaryVariant.withOpacity(0.2 * todo.priority);
 
     return isDeleted
         ? const SizedBox.shrink()
@@ -131,7 +131,7 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
           ),
           tileColor: itemColor,
           contentPadding:
-              const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+          const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
           title: Text(
             todo.text,
             style: textTheme.subtitle1!.copyWith(
